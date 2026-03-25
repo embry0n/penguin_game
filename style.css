@@ -408,6 +408,472 @@ h2 {
   opacity: 1;
   pointer-events: auto;
 }
+/* .move-buttons {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  background: rgba(0,0,0,0.5);
+  border-radius: 60px;
+  padding: 10px;
+}
+.action-buttons {
+  display: flex;
+  gap: 12px;
+}
+.ctrl-btn {
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  background: rgba(30,30,50,0.8);
+  border: 2px solid rgba(0,229,255,0.8);
+  color: white;
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 1;
+  backdrop-filter: blur(5px);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.ctrl-btn.action {
+  font-size: 16px;
+  background: rgba(0,100,200,0.8);
+}
+.ctrl-btn:active {
+  background: rgba(0,229,255,0.8);
+  transform: scale(0.95);
+} */
+
+.move-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr; /* три колонки равной ширины */
+  grid-template-rows: 1fr 1fr 1fr;    /* три строки равной высоты */
+  gap: 8px;
+  width: 150px;      /* задайте нужный размер */
+  height: 150px;
+  margin: 0 auto;    /* центрирование на странице */
+  background: transparent;
+}
+
+/* Распределяем кнопки по ячейкам сетки */
+.ctrl-btn[data-key="KeyW"] {
+  grid-row: 1 / 2;
+  grid-column: 2 / 3;
+}
+.ctrl-btn[data-key="KeyA"] {
+  grid-row: 2 / 3;
+  grid-column: 1 / 2;
+}
+.ctrl-btn[data-key="KeyS"] {
+  grid-row: 3 / 3;
+  grid-column: 2 / 3;
+}
+.ctrl-btn[data-key="KeyD"] {
+  grid-row: 2 / 3;
+  grid-column: 3 / 4;
+}
+
+/* Стили самих кнопок — можно оформить на свой вкус */
+.ctrl-btn {
+  background: #2c3e50;
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Эффекты при нажатии и наведении */
+.ctrl-btn:active {
+  transform: scale(0.95);
+  background: #1abc9c;
+}
+
+.ctrl-btn:hover {
+  background: #34495e;
+}
+@media (min-width: 768px) {
+  .mobile-controls {
+    display: none;
+  }
+}
+  pointer-events: none;
+  z-index: 10;
+}
+
+#hud {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 16px 24px;
+  gap: 16px;
+}
+
+#fish-counter,
+#level-display,
+#lives-display {
+  background: rgba(13, 43, 69, 0.85);
+  border: 1px solid rgba(0, 229, 255, 0.4);
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent-cyan);
+  backdrop-filter: blur(8px);
+  letter-spacing: 1px;
+  text-shadow: 0 0 10px rgba(0, 229, 255, 0.7);
+}
+
+#controls-hint {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 24px;
+  background: rgba(13, 43, 69, 0.7);
+  border: 1px solid rgba(0, 229, 255, 0.2);
+  border-radius: 8px;
+  padding: 8px 20px;
+  font-size: 11px;
+  color: rgba(168, 216, 240, 0.7);
+  letter-spacing: 0.5px;
+  backdrop-filter: blur(6px);
+}
+
+/* ─── SCREENS ─── */
+.screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(5, 15, 30, 0.92);
+  backdrop-filter: blur(12px);
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.screen.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.screen-content {
+  text-align: center;
+  max-width: 480px;
+  padding: 48px 40px;
+  background: linear-gradient(
+    145deg,
+    rgba(13, 43, 69, 0.9),
+    rgba(5, 15, 30, 0.95)
+  );
+  border: 1px solid rgba(0, 229, 255, 0.3);
+  border-radius: 20px;
+  box-shadow:
+    0 0 40px rgba(0, 229, 255, 0.15),
+    0 0 80px rgba(0, 229, 255, 0.05),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+  animation: float-card 4s ease-in-out infinite;
+}
+
+@keyframes float-card {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+.penguin-logo {
+  font-size: 72px;
+  margin-bottom: 16px;
+  animation: bounce-logo 2s ease-in-out infinite;
+  display: block;
+}
+
+@keyframes bounce-logo {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(-12px) rotate(3deg); }
+}
+
+.game-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 48px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: 4px;
+  color: var(--snow-white);
+  text-shadow:
+    0 0 20px rgba(0, 229, 255, 0.8),
+    0 0 60px rgba(0, 229, 255, 0.3);
+  margin-bottom: 4px;
+}
+
+.game-title span {
+  color: var(--accent-cyan);
+  display: block;
+}
+
+.subtitle {
+  font-size: 13px;
+  color: var(--ice-blue);
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  opacity: 0.8;
+}
+
+.description {
+  font-size: 14px;
+  color: rgba(168, 216, 240, 0.75);
+  line-height: 1.8;
+  margin-bottom: 32px;
+}
+
+h2 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 32px;
+  font-weight: 900;
+  color: var(--accent-cyan);
+  text-shadow: 0 0 20px rgba(0, 229, 255, 0.6);
+  letter-spacing: 2px;
+  margin-bottom: 16px;
+}
+
+.screen-content p {
+  font-size: 14px;
+  color: var(--ice-blue);
+  line-height: 1.8;
+  margin-bottom: 28px;
+}
+
+.btn-row {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+
+.btn-play {
+  display: inline-block;
+  padding: 14px 40px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: var(--deep-blue);
+  background: var(--accent-cyan);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.5), 0 4px 16px rgba(0,0,0,0.4);
+}
+
+.btn-play:hover {
+  transform: scale(1.06) translateY(-2px);
+  box-shadow: 0 0 40px rgba(0, 229, 255, 0.8), 0 8px 24px rgba(0,0,0,0.5);
+  background: #33eeff;
+}
+
+.btn-play:active { transform: scale(0.98); }
+
+.btn-levels {
+  display: inline-block;
+  padding: 14px 28px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--accent-cyan);
+  background: transparent;
+  border: 2px solid rgba(0, 229, 255, 0.5);
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-levels:hover {
+  background: rgba(0, 229, 255, 0.12);
+  border-color: var(--accent-cyan);
+  transform: scale(1.04) translateY(-2px);
+  box-shadow: 0 0 20px rgba(0,229,255,0.3);
+}
+
+.btn-back {
+  display: inline-block;
+  padding: 10px 28px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: rgba(168, 216, 240, 0.7);
+  background: transparent;
+  border: 1px solid rgba(168, 216, 240, 0.25);
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 8px;
+}
+
+.btn-back:hover {
+  color: var(--accent-cyan);
+  border-color: rgba(0,229,255,0.5);
+}
+
+/* Wide card for level select */
+.screen-content.wide {
+  max-width: 560px;
+}
+
+/* Level grid */
+.level-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin: 24px 0 20px;
+}
+
+.level-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(0, 229, 255, 0.2);
+  border-radius: 14px;
+  padding: 18px 12px;
+  cursor: pointer;
+  transition: all 0.22s ease;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.level-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0,229,255,0.06), transparent);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.level-card:hover {
+  border-color: var(--accent-cyan);
+  transform: translateY(-4px);
+  box-shadow: 0 0 24px rgba(0,229,255,0.2), 0 8px 20px rgba(0,0,0,0.3);
+}
+
+.level-card:hover::before { opacity: 1; }
+
+.level-card:active { transform: translateY(-1px); }
+
+.level-card .lc-num {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--accent-cyan);
+  text-shadow: 0 0 12px rgba(0,229,255,0.6);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.level-card .lc-icon {
+  font-size: 26px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.level-card .lc-name {
+  font-size: 10px;
+  font-family: 'Orbitron', sans-serif;
+  letter-spacing: 1px;
+  color: var(--ice-blue);
+  line-height: 1.4;
+}
+
+.level-card .lc-fish {
+  font-size: 11px;
+  color: rgba(168,216,240,0.5);
+  margin-top: 6px;
+}
+
+.level-card.locked {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.level-card.locked::after {
+  content: '🔒';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+}
+
+.controls-info {
+  font-size: 12px;
+  color: rgba(168, 216, 240, 0.6);
+  line-height: 2;
+  border-top: 1px solid rgba(0,229,255,0.15);
+  padding-top: 20px;
+}
+
+/* ─── Slide effect when penguin belly-slides ─── */
+.slide-effect {
+  animation: slide-ui 0.3s ease;
+}
+
+@keyframes slide-ui {
+  0% { filter: blur(0px); }
+  50% { filter: blur(2px) brightness(1.3); }
+  100% { filter: blur(0px); }
+}
+
+/* ─── In-game menu button ─── */
+#menu-btn {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--accent-cyan);
+  background: rgba(13, 43, 69, 0.85);
+  border: 1px solid rgba(0, 229, 255, 0.4);
+  border-radius: 8px;
+  padding: 8px 16px;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  pointer-events: all;
+  transition: all 0.2s;
+}
+#menu-btn:hover {
+  background: rgba(0, 229, 255, 0.15);
+  border-color: var(--accent-cyan);
+}
+
+
+
+/* Мобильные кнопки управления */
+.mobile-controls {
+  position: fixed;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+  pointer-events: none;
+  z-index: 200;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.mobile-controls.active {
+  opacity: 1;
+  pointer-events: auto;
+}
 .move-buttons {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
