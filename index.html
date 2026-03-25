@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🐧 Penguin Quest — Рыбная Одиссея</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- UI Overlay -->
+  <div id="ui">
+    <div id="hud">
+      <div id="fish-counter">🐟 <span id="fish-count">0</span> / <span id="fish-total">0</span></div>
+      <div id="level-display">УРОВЕНЬ <span id="level-num">1</span></div>
+      <div id="lives-display">🐧 <span id="lives-count">3</span></div>
+      <button id="menu-btn" onclick="openInGameMenu()">☰ МЕНЮ</button>
+    </div>
+    <div id="controls-hint">
+      <span>WASD — движение</span>
+      <span>SPACE — прыжок</span>
+      <span>Shift — скольжение</span>
+    </div>
+  </div>
+
+  <!-- Start Screen -->
+  <div id="start-screen" class="screen active">
+    <div class="screen-content">
+      <div class="penguin-logo">🐧</div>
+      <h1 class="game-title">PENGUIN<br><span>QUEST</span></h1>
+      <p class="subtitle">Рыбная Одиссея</p>
+      <p class="description">Собирай рыбу, скользи по льду,<br>покоряй ледяные горы!</p>
+      <div class="btn-row">
+        <button class="btn-play" onclick="startGame()">▶ ИГРАТЬ</button>
+        <button class="btn-levels" onclick="showLevelSelect()">🗺 УРОВНИ</button>
+      </div>
+      <div class="controls-info">
+        <div>🎮 WASD — ходьба (медленно, ты пингвин!)</div>
+        <div>⬆️ SPACE — прыжок</div>
+        <div>💨 Shift — скользить животом</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Level Select Screen -->
+  <div id="level-select" class="screen">
+    <div class="screen-content wide">
+      <div class="penguin-logo">🗺</div>
+      <h2>ВЫБОР УРОВНЯ</h2>
+      <div class="level-grid" id="level-grid"></div>
+      <button class="btn-back" onclick="showScreen('start-screen')">← НАЗАД</button>
+    </div>
+  </div>
+
+  <!-- Level Complete Screen -->
+  <div id="level-complete" class="screen">
+    <div class="screen-content">
+      <div class="penguin-logo">🎉</div>
+      <h2>УРОВЕНЬ ПРОЙДЕН!</h2>
+      <p id="level-stats"></p>
+      <button class="btn-play" onclick="nextLevel()">СЛЕДУЮЩИЙ УРОВЕНЬ →</button>
+    </div>
+  </div>
+
+  <!-- Game Over Screen -->
+  <div id="game-over" class="screen">
+    <div class="screen-content">
+      <div class="penguin-logo">😢</div>
+      <h2>УПАЛ В ВОДУ!</h2>
+      <p>Пингвины умеют плавать,<br>но это было слишком глубоко...</p>
+      <button class="btn-play" onclick="restartLevel()">ПОПРОБОВАТЬ СНОВА</button>
+    </div>
+  </div>
+
+  <!-- Win Screen -->
+  <div id="win-screen" class="screen">
+    <div class="screen-content">
+      <div class="penguin-logo">🏆</div>
+      <h2>ТЫ ПОБЕДИЛ!</h2>
+      <p>Все рыбы собраны!<br>Пингвин сыт и счастлив!</p>
+      <button class="btn-play" onclick="restartGame()">ИГРАТЬ СНОВА</button>
+    </div>
+  </div>
+
+  <!-- In-game level select overlay -->
+  <div id="ingame-menu" class="screen">
+    <div class="screen-content wide">
+      <h2>ВЫБОР УРОВНЯ</h2>
+      <div class="level-grid" id="ingame-level-grid"></div>
+      <button class="btn-back" onclick="closeInGameMenu()">✕ ПРОДОЛЖИТЬ</button>
+    </div>
+  </div>
+
+  <!-- Canvas -->
+  <canvas id="game-canvas"></canvas>
+
+  <!-- Scripts — order matters: dependencies before dependents -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+  <script src="core.js"></script>       <!-- renderer, scene, camera, shared state, keys -->
+  <script src="materials.js"></script>  <!-- MAT object -->
+  <script src="levels.js"></script>     <!-- LEVELS data -->
+  <script src="entities.js"></script>   <!-- createPenguin, makePlatform, createFish, particles, snow, lighting -->
+  <script src="physics.js"></script>    <!-- updatePenguin, getStandingPlatform, updateCamera -->
+  <script src="world.js"></script>      <!-- buildLevel -->
+  <script src="ui.js"></script>         <!-- updateHUD, showScreen, menus -->
+  <script src="game.js"></script>       <!-- startGame, loadLevel, death, fish collection -->
+  <script src="main.js"></script>       <!-- animate loop + boot -->
+</body>
+</html>
