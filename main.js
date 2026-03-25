@@ -32,6 +32,7 @@ loadFishModel(() => {
   animate();
 });
 //govno
+initMobileControls();
 showScreen('start-screen');
 
 // Render level 0 as background on the start screen
