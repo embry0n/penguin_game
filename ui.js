@@ -64,10 +64,12 @@ function closeInGameMenu() {
 
 function initMobileControls() {
   const container = document.getElementById('mobile-controls');
+  
   if (!container) return;
   
   // Показываем кнопки только на мобильных устройствах
-  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  //const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  const isMobile = true; // всегда показывать
   if (isMobile) {
     container.classList.add('active');
   }
