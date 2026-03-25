@@ -15,6 +15,7 @@
       <div id="level-display">УРОВЕНЬ <span id="level-num">1</span></div>
       <div id="lives-display">🐧 <span id="lives-count">3</span></div>
       <button id="menu-btn" onclick="openInGameMenu()">☰ МЕНЮ</button>
+
     </div>
     <div id="controls-hint">
       <span>WASD — движение</span>
@@ -51,7 +52,7 @@
       <button class="btn-back" onclick="showScreen('start-screen')">← НАЗАД</button>
     </div>
   </div>
-
+  
   <!-- Level Complete Screen -->
   <div id="level-complete" class="screen">
     <div class="screen-content">
@@ -91,9 +92,22 @@
     </div>
   </div>
 
+
   <!-- Canvas -->
   <canvas id="game-canvas"></canvas>
-
+  
+  <div id="mobile-controls" class="mobile-controls">
+    <div class="move-buttons">
+      <button class="ctrl-btn" data-key="KeyW">▲</button>
+      <button class="ctrl-btn" data-key="KeyS">▼</button>
+      <button class="ctrl-btn" data-key="KeyA">◀</button>
+      <button class="ctrl-btn" data-key="KeyD">▶</button>
+    </div>
+    <div class="action-buttons">
+      <button class="ctrl-btn action" data-key="Space">Прыжок</button>
+      <button class="ctrl-btn action" data-key="ShiftLeft">Скольжение</button>
+    </div>
+  </div>
   <!-- Scripts — order matters: dependencies before dependents -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
@@ -107,17 +121,6 @@
   <script src="game.js"></script>       <!-- startGame, loadLevel, death, fish collection -->
   <script src="main.js"></script>       <!-- animate loop + boot -->
 
-  <div id="mobile-controls" class="mobile-controls">
-  <div class="move-buttons">
-    <button class="ctrl-btn" data-key="KeyW">▲</button>
-    <button class="ctrl-btn" data-key="KeyS">▼</button>
-    <button class="ctrl-btn" data-key="KeyA">◀</button>
-    <button class="ctrl-btn" data-key="KeyD">▶</button>
-  </div>
-  <div class="action-buttons">
-    <button class="ctrl-btn action" data-key="Space">Прыжок</button>
-    <button class="ctrl-btn action" data-key="ShiftLeft">Скольжение</button>
-  </div>
-</div>
+
 </body>
 </html>
