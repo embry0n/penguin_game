@@ -59,3 +59,49 @@ function closeInGameMenu() {
   document.getElementById('ingame-menu').classList.remove('active');
   gameState = 'playing';
 }
+
+
+
+function initMobileControls() {
+  const container = document.getElementById('mobile-controls');
+  if (!container) return;
+  
+  // Показываем кнопки только на мобильных устройствах
+  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  if (isMobile) {
+    container.classList.add('active');
+  }
+  
+  const buttons = container.querySelectorAll('.ctrl-btn');
+  buttons.forEach(btn => {
+    const keyCode = btn.getAttribute('data-key');
+    if (!keyCode) return;
+    
+    // Обработка касаний
+    btn.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      keys[keyCode] = true;
+    });
+    btn.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      keys[keyCode] = false;
+    });
+    btn.addEventListener('touchcancel', (e) => {
+      e.preventDefault();
+      keys[keyCode] = false;
+    });
+    
+    // Для отладки на десктопе (можно удалить)
+    btn.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      keys[keyCode] = true;
+    });
+    btn.addEventListener('mouseup', (e) => {
+      e.preventDefault();
+      keys[keyCode] = false;
+    });
+    btn.addEventListener('mouseleave', (e) => {
+      keys[keyCode] = false;
+    });
+  });
+}
